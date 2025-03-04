@@ -1,0 +1,32 @@
+#include "jaccard.hh"
+
+
+
+
+double calcula_interseccio(const set<string>& F1, const set<string>& F2){
+    int elements_comuns = 0;
+	set<string>::iterator it = F1.begin();
+    set<string>::iterator it2 = F2.begin();
+
+	while(it!= F1.end() && it2 != F2.end()){
+		if((*it) > (*it2)){
+			++it;
+            ++it2;
+		}
+		else if(*it < *it2 ){
+			++it;
+		}
+		else {
+			++it;
+			++it2;
+			++elements_comuns;
+		}
+	}
+	return elements_comuns;
+}
+
+double jaccard_similarity(const set<string>& A, const set<string>& B) {
+
+    double elements_comuns = calcula_interseccio(A,B);
+	return elements_comuns / (A.size() + B.size() - elements_comuns);
+}
