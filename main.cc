@@ -4,6 +4,7 @@
 #include "k-shingles.hh"
 #include "normalizeText.hh"
 #include "jaccard.hh"
+#include "minHashing.hh"
 using namespace std;
 
 
