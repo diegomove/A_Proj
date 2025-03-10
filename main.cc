@@ -189,7 +189,7 @@ int main() {
             /*
             for (size_t i = 0; i < simDocs.size(); ++i) {
                 for (size_t j = 0; j < simDocs.size(); ++j) {
-                    cout << "Similitud entre documento " << i+1 << " y documento " << j+1 << " : " << simDocs[i][j] << " ";
+                    cout << "Similitud entre documento " << i+1 << " y documento " << j+1 << " : " << simDocs[i][j] << endl;
                 }
                 cout << endl;
             }
