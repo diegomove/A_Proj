@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <set>
+#include "lsh.hh"
 #include <unordered_set>
 #include <fstream>
 #include <limits.h>
@@ -148,8 +149,36 @@ int main() {
 
         }else if(enfoque ==2){
 
-        }else{
-            
+        }else if(enfoque == 3){
+            cout << "¿Cuántas funciones de hash quieres usar?" << endl;
+            int numHashes;
+            cin >> numHashes;
+
+            cout << "¿En cuántas bandas deseas dividir las firmas?" << endl;
+            int numBands;
+            cin >> numBands;
+
+            vector<int> a = generateRandomCoefficients(numHashes, 20000);
+            vector<int> b = generateRandomCoefficients(numHashes, 20000);
+
+            vector<vector<int>> minHashesPorDocumento;
+
+            for (size_t i = 0; i < shinglesPorDocumento.size(); ++i) {
+                vector<int> minHash = computeMinHash(shinglesPorDocumento[i], numHashes, a, b);
+                minHashesPorDocumento.push_back(minHash);
+            }
+
+            set<pair<int, int>> candidatePairs = lsh(minHashesPorDocumento, numBands);
+
+            // Calcular similitud de Jaccard para los candidatos y mostrar resultados
+            cout << "Candidatos encontrados por LSH:" << endl;
+            for (const auto& pair : candidatePairs) {
+                int doc1 = pair.first;
+                int doc2 = pair.second;
+                //double jaccardSim = minHashJaccard(minHashesPorDocumento[doc1], minHashesPorDocumento[doc2]);
+                double jaccardSim = jaccard_similarity(shinglesPorDocumento[doc1], shinglesPorDocumento[doc2]);
+                cout << "Similitud aproximada entre documento " << doc1 + 1 << " y documento " << doc2 + 1 << ": " << jaccardSim << endl;
+            }
         }
 
         } catch (const runtime_error &error) {
