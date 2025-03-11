@@ -12,6 +12,7 @@
 #include "normalizeText2.hh"
 #include "minhash.hh"
 #include "permutacions.hh"
+#include "similitud.hh"
 
 
 
@@ -145,9 +146,54 @@ int main() {
                 cout << endl;
             }
 
-        if(enfoque == 1){
+        vector<vector<double>> simDocs(documentos.size(), vector<double>(documentos.size())); // Creamos matriz donde guardaremos las respectivas similitudes entre cada par de documentos
 
-        }else if(enfoque ==2){
+        if(enfoque == 1){
+            for (size_t i = 0; i < documentos.size(); ++i) {
+                for (size_t j = i+1; j < documentos.size(); ++j) {
+                    double jaccardSim = jaccard_similarity(shinglesPorDocumento[i], shinglesPorDocumento[j]);
+                    simBetweenDocs(simDocs, i, j, jaccardSim);
+                    simBetweenDocs(simDocs, j, i, jaccardSim); // Almacenamos la similitud en ambas posiciones
+                    //cout << "Similitud de Jaccard entre documento " << i + 1 << " y documento " << j + 1 << ": " << jaccardSim << endl;
+                }
+            simBetweenDocs(simDocs, i, i, -1.0); // Asignamos -1.0 para la diagonal ya que comparamos un documento consigo mismo
+            }
+        }else if(enfoque == 2){
+            cout << "¿Cuántas funciones de hash quieres usar?" << endl;
+            int numHashes;
+            cin >> numHashes;
+
+            vector<int> a = generateRandomCoefficients(numHashes, 20000);
+            vector<int> b = generateRandomCoefficients(numHashes, 20000);
+
+            vector<vector<int>> minHashesPorDocumento;
+
+            for (size_t i = 0; i < shinglesPorDocumento.size(); ++i) {
+                vector<int> minHash = computeMinHash(shinglesPorDocumento[i], numHashes, a, b);
+                minHashesPorDocumento.push_back(minHash);
+            }
+
+            for (size_t i = 0; i < minHashesPorDocumento.size(); ++i) {
+                for (size_t j = i+1; j < minHashesPorDocumento.size(); ++j) {
+                        double minHashJaccardSim = minHashJaccard(minHashesPorDocumento[i], minHashesPorDocumento[j]);
+                        simBetweenDocs(simDocs, i, j, minHashJaccardSim);
+                        simBetweenDocs(simDocs, j, i, minHashJaccardSim); // Almacenamos la similitud en ambas posiciones
+                        //cout << "Similitud aproximada entre documento " << i + 1 << " y documento " << j + 1 << ": " << minHashJaccardSim << endl;
+                    
+                    
+                }
+                simBetweenDocs(simDocs, i, i, -1.0); // Asignamos -1.0 para la diagonal ya que comparamos un documento consigo mismo
+            }
+
+            //Mostrar similitudes entre documentos
+            /*
+            for (size_t i = 0; i < simDocs.size(); ++i) {
+                for (size_t j = 0; j < simDocs.size(); ++j) {
+                    cout << "Similitud entre documento " << i+1 << " y documento " << j+1 << " : " << simDocs[i][j] << endl;
+                }
+                cout << endl;
+            }
+            */
 
         }else if(enfoque == 3){
             cout << "¿Cuántas funciones de hash quieres usar?" << endl;

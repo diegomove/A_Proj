@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -Wall -Wextra -std=c++17 -O2
 
-SRC = main.cc k-shingles.cc normalizeText.cc jaccard.cc minhash.cc normalizeText2.cc permutacions.cc stopwords.cc lsh.cc
+SRC = main.cc k-shingles.cc normalizeText.cc jaccard.cc minhash.cc normalizeText2.cc permutacions.cc stopwords.cc lsh.cc similitud.cc
 OBJ = $(SRC:.cc=.o)
 
 TARGET = ProjecteA
@@ -11,7 +11,7 @@ all: $(TARGET)
 $(TARGET): $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-main.o: main.cc k-shingles.hh normalizeText.hh jaccard.hh minhash.hh normalizeText2.hh permutacions.hh stopwords.hh lsh.hh
+main.o: main.cc k-shingles.hh normalizeText.hh jaccard.hh minhash.hh normalizeText2.hh permutacions.hh stopwords.hh lsh.hh similitud.hh
 	$(CXX) $(CXXFLAGS) -c main.cc -o main.o
 
 k-shingles.o: k-shingles.cc k-shingles.hh
@@ -34,6 +34,9 @@ permutacions.o: permutacions.cc permutacions.hh
 
 stopwords.o: stopwords.cc stopwords.hh
 	$(CXX) $(CXXFLAGS) -c stopwords.cc -o stopwords.o
+
+similitud.o: similitud.cc similitud.hh
+	$(CXX) $(CXXFLAGS) -c similitud.cc -o similitud.o
 
 clean:
 	rm -f $(OBJ) $(TARGET)
