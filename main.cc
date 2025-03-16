@@ -158,6 +158,10 @@ int main() {
                 }
             simBetweenDocs(simDocs, i, i, -1.0); // Asignamos -1.0 para la diagonal ya que comparamos un documento consigo mismo
             }
+            int numDoc = 0; // número del documento que queremos comprobar las máximas/mínimas similitudes 
+            int numDocsSim = 10; // número de documentos con el máximo/mínimo de similitud respecto al documento numDoc(saldrá el top 10 por decirlo de alguna manera)
+            vector<pair<double, int>> maximasSim = consultarMaxSim(numDoc, numDocsSim, simDocs); 
+            vector<pair<double, int>> minimasSim = consultarMinSim(numDoc, numDocsSim, simDocs);
         }else if(enfoque == 2){
             cout << "¿Cuántas funciones de hash quieres usar?" << endl;
             int numHashes;
@@ -184,6 +188,11 @@ int main() {
                 }
                 simBetweenDocs(simDocs, i, i, -1.0); // Asignamos -1.0 para la diagonal ya que comparamos un documento consigo mismo
             }
+
+            int numDoc = 0; // número del documento que queremos comprobar las máximas/mínimas similitudes 
+            int numDocsSim = 10; // número de documentos con el máximo/mínimo de similitud respecto al documento numDoc(saldrá el top 10 por decirlo de alguna manera)
+            vector<pair<double, int>> maximasSim = consultarMaxSim(numDoc, numDocsSim, simDocs); 
+            vector<pair<double, int>> minimasSim = consultarMinSim(numDoc, numDocsSim, simDocs);
 
             //Mostrar similitudes entre documentos
             /*
