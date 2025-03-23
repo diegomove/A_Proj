@@ -27,10 +27,32 @@ vector<int> generateRandomCoefficients(int num, int maxVal) {
     return coefficients;
 }
 
+bool isPrime(int n) {
+    if (n < 2) return false;
+    if (n == 2 || n == 3) return true;
+    if (n % 2 == 0 || n % 3 == 0) return false;
+    
+    for (int i = 5; i * i <= n; i += 6) {
+        if (n % i == 0 || n % (i + 2) == 0) return false;
+    }
+    return true;
+}
+
+int nextPrime(int n) {
+    if (n < 2) return 2;
+    int candidate = n + 1;
+    while (!isPrime(candidate)) {
+        candidate++;
+    }
+    return candidate;
+}
+
 
 vector<int> computeMinHash(const unordered_set<string>& shingles, int numHashFunctions, vector<int> a, vector<int> b) {
-    vector<int> minHashValues(numHashFunctions, 10007);
-    const int interval = 10007; // Un numero primo que sirve para limitar el intervalo de la funcion hash
+    int prime = nextPrime(2 * numHashFunctions);
+    //cout << "prime " << prime << endl;
+    vector<int> minHashValues(numHashFunctions, prime);
+    const int interval = prime; // Un numero primo que sirve para limitar el intervalo de la funcion hash
 
 
     hash<string> hashFunction;

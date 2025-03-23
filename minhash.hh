@@ -9,3 +9,7 @@ vector<int> computeMinHash(const unordered_set<string>& shingles, int numHashFun
 
 double minHashJaccard(const vector<int>& sig1, const vector<int>& sig2);
 
+int nextPrime(int n);
+
+bool isPrime(int n);
+
