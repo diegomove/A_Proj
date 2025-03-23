@@ -138,12 +138,13 @@ int main() {
                 unordered_set<string> shingles = k_shingles(k, textoNormalizado); // Generar k-shingles
 
                 shinglesPorDocumento.push_back(shingles);
-
+        /*
                 cout << "K-Shingles del documento " << i + 1 << ": ";
                 for (const string& shingle : shingles) {
                     cout << shingle << " ";
                 }
                 cout << endl;
+        */
             }
 
         vector<vector<double>> simDocs(documentos.size(), vector<double>(documentos.size())); // Creamos matriz donde guardaremos las respectivas similitudes entre cada par de documentos
